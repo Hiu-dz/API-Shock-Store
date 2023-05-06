@@ -1,5 +1,6 @@
 package com.hieuvo.shonkstore.models.product;
 
+import com.hieuvo.shonkstore.models.bill.BillDetail;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +35,9 @@ public class Product {
     @Column(columnDefinition = "tinyint(1)", nullable = false)
     private boolean isDeleted;
 
-//    Join tables
     @OneToMany(mappedBy = "product")
     private List<ProductCategory> productsCategories;
+
+    @OneToMany(mappedBy = "product")
+    private List<BillDetail> billDetails;
 }

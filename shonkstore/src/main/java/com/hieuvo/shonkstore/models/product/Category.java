@@ -28,7 +28,6 @@ public class Category {
     @Column(columnDefinition = "tinyint(1)", nullable = false)
     private boolean isDeleted;
 
-//    Join tables
     @OneToMany(mappedBy = "category")
     private List<ProductCategory> productsCategories;
 }

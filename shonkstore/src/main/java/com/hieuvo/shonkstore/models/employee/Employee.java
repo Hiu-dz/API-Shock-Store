@@ -1,11 +1,13 @@
 package com.hieuvo.shonkstore.models.employee;
 
+import com.hieuvo.shonkstore.models.bill.Bill;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -47,8 +49,10 @@ public class Employee {
     @Column(name = "is_deleted", columnDefinition = "tinyint(1)", nullable = false)
     private boolean isDeleted;
 
-//    Join tables
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_salary_id", referencedColumnName = "id")
+    @JoinColumn(name = "employee_salary_id")
     private EmployeeSalary employeeSalary;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Bill> bills;
 }

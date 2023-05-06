@@ -24,7 +24,6 @@ public class EmployeeSalary {
     @Column(columnDefinition = "tinyint(1)", nullable = false)
     private boolean isPaid;
 
-//    Join tables
     @OneToOne(mappedBy = "employeeSalary")
     private Employee employee;
 }
