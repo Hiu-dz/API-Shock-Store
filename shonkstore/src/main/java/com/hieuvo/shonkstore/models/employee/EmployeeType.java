@@ -13,4 +13,13 @@ public enum EmployeeType {
     CASHIER("Cashier");
 
     private String value;
+
+    public static EmployeeType getType(String employeeType) {
+        for (EmployeeType type : EmployeeType.values()) {
+            if (type.getValue().equals(employeeType)) {
+                return type;
+            }
+        }
+        return null;
+    }
 }

@@ -50,7 +50,7 @@ public class Employee {
     private boolean isDeleted;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_salary_id")
+    @JoinColumn(name = "employee_salary_id", columnDefinition = "varchar(255)", nullable = false)
     private EmployeeSalary employeeSalary;
 
     @OneToMany(mappedBy = "employee")

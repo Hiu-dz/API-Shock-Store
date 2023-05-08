@@ -28,7 +28,7 @@ public class ProductCategory {
     private Category category;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id", columnDefinition = "varchar(255)", nullable = false)
     private Employee employee;
 
     @Column(name = "created_time", nullable = false)
