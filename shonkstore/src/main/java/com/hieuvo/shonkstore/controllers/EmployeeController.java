@@ -25,7 +25,7 @@ public class EmployeeController {
 
     @PostMapping(path = {"", "/"}, produces = "application/json")
     public ResponseEntity<ResponseObject> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        HttpStatus httpStatus = HttpStatus.OK;
+        HttpStatus httpStatus = HttpStatus.CREATED;
         String message = "Create new employee successfully";
         ResponseObject responseObject = new ResponseObject(httpStatus.value(), message, employeeService.createEmployee(employeeDto));
 

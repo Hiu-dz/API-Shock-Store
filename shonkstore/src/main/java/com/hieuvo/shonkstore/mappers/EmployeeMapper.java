@@ -49,7 +49,7 @@ public class EmployeeMapper {
 
     private Double getEmployeeSalary(Employee employee) {
         EmployeeSalary employeeSalary = employeeSalaryRepository.findAll().stream()
-              .filter(eSalary -> employee.getId().equals(eSalary.getEmployee().getId())).findFirst()
+              .filter(eSalary -> employee.getEmployeeSalary().getId().equals(eSalary.getId())).findFirst()
               .orElseThrow(() -> new NotFoundException(ShonkSExceptionMessage.SALARY_001 + employee.getId()));
 
         return employeeSalary.getSalary();

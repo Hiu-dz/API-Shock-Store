@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.UUID;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(columnDefinition = "varchar(255)", nullable = false, updatable = false)
     private UUID id;
 
@@ -40,10 +43,10 @@ public class Employee {
     @Column(name = "is_worked", columnDefinition = "tinyint(1)", nullable = false)
     private boolean isWorked;
 
-    @Column(name = "begin_time", nullable = false)
+    @Column(name = "begin_time", columnDefinition = "datetime(0)", nullable = false)
     private LocalDateTime beginTime;
 
-    @Column(name = "end_time")
+    @Column(name = "end_time", columnDefinition = "datetime(0)")
     private LocalDateTime endTime;
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1)", nullable = false)

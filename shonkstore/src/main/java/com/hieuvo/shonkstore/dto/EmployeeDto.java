@@ -1,5 +1,8 @@
 package com.hieuvo.shonkstore.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hieuvo.shonkstore.common.constants.ShonkSConstant;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,8 +19,11 @@ public class EmployeeDto {
     private String phone;
     private String type;
     private Double salary;
+    @JsonProperty(value = "isWorked")
     private boolean isWorked;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ShonkSConstant.DATE_TIME_FORMAT)
     private LocalDateTime beginTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ShonkSConstant.DATE_TIME_FORMAT)
     private LocalDateTime endTime;
 
 }
