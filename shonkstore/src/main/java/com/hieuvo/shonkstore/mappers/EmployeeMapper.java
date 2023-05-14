@@ -2,6 +2,7 @@ package com.hieuvo.shonkstore.mappers;
 
 import com.hieuvo.shonkstore.common.constants.ShonkSExceptionMessage;
 import com.hieuvo.shonkstore.dto.EmployeeDto;
+import com.hieuvo.shonkstore.dto.access.RegisterDto;
 import com.hieuvo.shonkstore.exceptions.NotFoundException;
 import com.hieuvo.shonkstore.models.employee.Employee;
 import com.hieuvo.shonkstore.models.employee.EmployeeSalary;
@@ -9,6 +10,8 @@ import com.hieuvo.shonkstore.models.employee.EmployeeType;
 import com.hieuvo.shonkstore.repositories.EmployeeSalaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 public class EmployeeMapper {
@@ -43,6 +46,29 @@ public class EmployeeMapper {
         employee.setWorked(employeeDto.isWorked());
         employee.setBeginTime(employeeDto.getBeginTime());
         employee.setEndTime(employeeDto.getEndTime());
+
+        return employee;
+    }
+
+    public Employee convertRegisterDtoToModel(RegisterDto registerDto) {
+        Employee employee = new Employee();
+        EmployeeSalary employeeSalary = new EmployeeSalary();
+
+        employeeSalary.setSalary(registerDto.getSalary());
+        employeeSalary.setPaid(true);
+
+        employee.setSurname(registerDto.getSurname());
+        employee.setName(registerDto.getName());
+        employee.setDateOfBirth(registerDto.getDateOfBirth());
+        employee.setAge(registerDto.getAge());
+        employee.setEmail(registerDto.getEmail());
+        employee.setAddress(registerDto.getAddress());
+        employee.setPhone(registerDto.getPhone());
+        employee.setType(EmployeeType.getType(registerDto.getType()));
+        employee.setWorked(true);
+        employee.setBeginTime(LocalDateTime.now());
+        employee.setEndTime(null);
+        employee.setEmployeeSalary(employeeSalary);
 
         return employee;
     }

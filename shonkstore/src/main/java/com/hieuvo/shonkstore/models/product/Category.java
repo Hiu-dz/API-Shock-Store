@@ -1,5 +1,6 @@
 package com.hieuvo.shonkstore.models.product;
 
+import com.hieuvo.shonkstore.models.product.key.ProductCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -13,6 +13,11 @@ public class EmployeeSalaryServiceImpl implements EmployeeSalaryService {
     private EmployeeSalaryRepository employeeSalaryRepository;
 
     @Override
+    public EmployeeSalary createEmployeeSalary(Employee employee) {
+        return employeeSalaryRepository.save(employee.getEmployeeSalary());
+    }
+
+    @Override
     public EmployeeSalary createEmployeeSalary(Employee employee, Double salary) {
         EmployeeSalary employeeSalary = new EmployeeSalary();
 

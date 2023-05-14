@@ -31,4 +31,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(responseError, httpStatus);
     }
+
+    @ExceptionHandler(NotImplementedException.class)
+    public ResponseEntity<Object> handleNotImplementedException(NotImplementedException exception) {
+        HttpStatus httpStatus = HttpStatus.NOT_IMPLEMENTED;
+        ResponseError responseError = new ResponseError(
+                LocalDateTime.now(), httpStatus, exception.getMessage()
+        );
+
+        return new ResponseEntity<>(responseError, httpStatus);
+    }
 }

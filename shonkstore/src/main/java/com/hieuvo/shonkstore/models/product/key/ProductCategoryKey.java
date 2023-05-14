@@ -1,4 +1,4 @@
-package com.hieuvo.shonkstore.models.product;
+package com.hieuvo.shonkstore.models.product.key;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

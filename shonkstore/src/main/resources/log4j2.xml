@@ -8,7 +8,7 @@
 
         <RollingFile name="RollingFile"
                      fileName="./src/main/resources/logs/app.log"
-                     filePattern="./logs/$${date:yyyy-MM}/spring-boot-logger-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
+                     filePattern="./src/main/resources/logs/$${date:yyyy-MM}/app-%d{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout>
                 <pattern>%d{ISO8601} %5p %pid --- [%15.15t] %-40.40logger{1.} : %msg%n</pattern>
             </PatternLayout>
