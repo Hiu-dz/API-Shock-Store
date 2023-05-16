@@ -1,7 +1,8 @@
-package com.hieuvo.shonkstore.models.employee;
+package com.hieuvo.shonkstore.models.user;
 
 import com.hieuvo.shonkstore.models.Account;
-import com.hieuvo.shonkstore.models.bill.Bill;
+import com.hieuvo.shonkstore.models.bill.CustomerBill;
+import com.hieuvo.shonkstore.models.product.key.ProductCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +19,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "employees")
-public class Employee {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -49,10 +50,7 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "nvarchar(255)", nullable = false)
-    private EmployeeType type;
-
-    @Column(name = "is_worked", columnDefinition = "tinyint(1)", nullable = false)
-    private boolean isWorked;
+    private UserType type;
 
     @Column(name = "begin_time", columnDefinition = "datetime(0)")
     private LocalDateTime beginTime;
@@ -60,15 +58,15 @@ public class Employee {
     @Column(name = "end_time", columnDefinition = "datetime(0)")
     private LocalDateTime endTime;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_salary_id", columnDefinition = "varchar(255)", nullable = false)
+    @OneToOne(mappedBy = "user")
     private EmployeeSalary employeeSalary;
 
-    @OneToMany(mappedBy = "employee")
-    private List<Bill> bills;
+    @OneToMany(mappedBy = "user")
+    private List<ProductCategory> productCategories;
 
-    @OneToOne(mappedBy = "employee")
+    @OneToMany(mappedBy = "user")
+    private List<CustomerBill> customerBills;
+
+    @OneToOne(mappedBy = "user")
     private Account account;
-
-
 }

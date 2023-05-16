@@ -1,7 +1,7 @@
 package com.hieuvo.shonkstore.services.implement;
 
-import com.hieuvo.shonkstore.models.employee.Employee;
-import com.hieuvo.shonkstore.models.employee.EmployeeSalary;
+import com.hieuvo.shonkstore.models.user.User;
+import com.hieuvo.shonkstore.models.user.EmployeeSalary;
 import com.hieuvo.shonkstore.repositories.EmployeeSalaryRepository;
 import com.hieuvo.shonkstore.services.EmployeeSalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +13,12 @@ public class EmployeeSalaryServiceImpl implements EmployeeSalaryService {
     private EmployeeSalaryRepository employeeSalaryRepository;
 
     @Override
-    public EmployeeSalary createEmployeeSalary(Employee employee) {
-        return employeeSalaryRepository.save(employee.getEmployeeSalary());
+    public EmployeeSalary createEmployeeSalary(User user) {
+        return employeeSalaryRepository.save(user.getEmployeeSalary());
     }
 
     @Override
-    public EmployeeSalary createEmployeeSalary(Employee employee, Double salary) {
+    public EmployeeSalary createEmployeeSalary(User user, Double salary) {
         EmployeeSalary employeeSalary = new EmployeeSalary();
 
         employeeSalary.setSalary(salary);

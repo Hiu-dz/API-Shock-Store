@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/accounts")
+@RequestMapping(path = "/api/v1/accounts")
 public class AccountController {
     @Autowired
     private AccountService accountService;
@@ -27,7 +27,7 @@ public class AccountController {
         return new ResponseEntity<>(result, httpStatus);
     }
 
-    @PostMapping(path = {"", "/"}, produces = "application/json")
+    @PostMapping(path = {"/register"}, produces = "application/json")
     public ResponseEntity<ResponseObject> createAccount(@RequestBody RegisterDto registerDto) {
         HttpStatus httpStatus = HttpStatus.CREATED;
         String message = "Create new account successfully";

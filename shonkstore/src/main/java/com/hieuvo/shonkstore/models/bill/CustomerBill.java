@@ -1,6 +1,6 @@
 package com.hieuvo.shonkstore.models.bill;
 
-import com.hieuvo.shonkstore.models.employee.Employee;
+import com.hieuvo.shonkstore.models.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +16,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bills")
-public class Bill {
+@Table(name = "customer_bills")
+public class CustomerBill {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -25,8 +25,8 @@ public class Bill {
     private UUID id;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "employee_id", columnDefinition = "varchar(255)", nullable = false)
-    private Employee employee;
+    @JoinColumn(name = "user_id", columnDefinition = "varchar(255)", nullable = false)
+    private User user;
 
     @Column(name = "invoice_time", columnDefinition = "datetime", nullable = false)
     private LocalDateTime invoiceTime;
@@ -37,6 +37,6 @@ public class Bill {
     @Column(name = "is_deleted", columnDefinition = "tinyint(1)", nullable = false)
     private boolean isDeleted;
 
-    @OneToMany(mappedBy = "bill")
-    private List<BillDetail> billDetails;
+    @OneToMany(mappedBy = "customerBill")
+    private List<CustomerBillDetail> customerBillDetails;
 }

@@ -1,17 +1,20 @@
 package com.hieuvo.shonkstore.services.implement;
 
 import com.hieuvo.shonkstore.common.constants.ShonkSExceptionMessage;
-import com.hieuvo.shonkstore.dto.AccountDto;
+import com.hieuvo.shonkstore.common.responses.AuthenticationResponse;
+import com.hieuvo.shonkstore.dto.access.AuthenticationDto;
 import com.hieuvo.shonkstore.dto.access.LoginDto;
 import com.hieuvo.shonkstore.dto.access.RegisterDto;
 import com.hieuvo.shonkstore.exceptions.BadRequestException;
 import com.hieuvo.shonkstore.exceptions.NotFoundException;
+import com.hieuvo.shonkstore.exceptions.NotImplementedException;
 import com.hieuvo.shonkstore.mappers.AccountMapper;
-import com.hieuvo.shonkstore.mappers.EmployeeMapper;
-import com.hieuvo.shonkstore.mappers.LoginMapper;
+import com.hieuvo.shonkstore.mappers.AuthenticationMapper;
+import com.hieuvo.shonkstore.mappers.UserMapper;
 import com.hieuvo.shonkstore.models.Account;
 import com.hieuvo.shonkstore.repositories.AccountRepository;
 import com.hieuvo.shonkstore.services.AccountService;
+import com.hieuvo.shonkstore.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,32 +29,37 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountMapper accountMapper;
     @Autowired
-    private EmployeeMapper employeeMapper;
+    private UserMapper userMapper;
     @Autowired
-    private LoginMapper loginMapper;
+    private AuthenticationMapper authenticationMapper;
+
+    @Autowired
+    private JwtService jwtService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public LoginDto loginAccount(LoginDto loginDto) {
+    public AuthenticationResponse loginAccount(LoginDto loginDto) {
         if (!hasAccountByUsername(loginDto.getUsername())) {
             throw new BadRequestException(ShonkSExceptionMessage.ACCOUNT_003);
         }
-        if (!isPasswordOfUsername(loginDto.getUsername(), loginDto.getPassword())) {
+        if (!hasAccountByUsernameAndPassword(loginDto.getUsername(), loginDto.getPassword())) {
             throw new BadRequestException(ShonkSExceptionMessage.ACCOUNT_004);
         }
 
         Account account = accountRepository.findAll().stream()
                 .filter(acc -> loginDto.getUsername().equals(acc.getUsername()) &&
-                               passwordEncoder.encode(loginDto.getPassword()).equals(acc.getPassword())).findFirst()
-                .orElseThrow(null);
+                        passwordEncoder.matches(loginDto.getPassword(), acc.getPassword()))
+                .findFirst()
+                .orElseThrow(() -> new NotImplementedException(ShonkSExceptionMessage.SHONKS_002));
+        String jwtToken = jwtService.generateToken(account);
 
-        return loginMapper.convertAccountToDto(account);
+        return new AuthenticationResponse(jwtToken);
     }
 
     @Override
-    public AccountDto createAccount(RegisterDto registerDto) {
+    public AuthenticationDto createAccount(RegisterDto registerDto) {
         if (hasAccountByUsername(registerDto.getUsername())) {
             throw new BadRequestException(ShonkSExceptionMessage.ACCOUNT_002 + registerDto.getUsername());
         }
@@ -60,12 +68,11 @@ public class AccountServiceImpl implements AccountService {
         }
 
         Account account = accountMapper.convertRegisterDtoToModel(registerDto);
-
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        account.setEmployee(employeeMapper.convertRegisterDtoToModel(registerDto));
+        account.setUser(userMapper.convertRegisterDtoToModel(registerDto));
         accountRepository.save(account);
 
-        return accountMapper.convertModelToDto(account);
+        return authenticationMapper.convertAccountToDto(account);
     }
 
     private boolean hasAccountByUsername(String username) {
@@ -73,8 +80,10 @@ public class AccountServiceImpl implements AccountService {
                 .anyMatch(account -> username.equals(account.getUsername()));
     }
 
-    private boolean isPasswordOfUsername(String username, String password) {
-        return passwordEncoder.matches(password, getAccountByUsername(username).getPassword());
+    private boolean hasAccountByUsernameAndPassword(String username, String password) {
+        return accountRepository.findAll().stream()
+                .anyMatch(acc -> username.equals(acc.getUsername()) &&
+                                 passwordEncoder.matches(password, acc.getPassword()));
     }
 
     private Account getAccountByUsername(String username) {

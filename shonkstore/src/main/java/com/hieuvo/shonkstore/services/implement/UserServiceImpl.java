@@ -1,42 +1,36 @@
 package com.hieuvo.shonkstore.services.implement;
 
-import com.hieuvo.shonkstore.common.constants.ShonkSExceptionMessage;
-import com.hieuvo.shonkstore.dto.EmployeeDto;
+import com.hieuvo.shonkstore.dto.UserDto;
 import com.hieuvo.shonkstore.dto.access.RegisterDto;
-import com.hieuvo.shonkstore.exceptions.BadRequestException;
-import com.hieuvo.shonkstore.mappers.EmployeeMapper;
-import com.hieuvo.shonkstore.models.employee.Employee;
-import com.hieuvo.shonkstore.models.employee.EmployeeSalary;
-import com.hieuvo.shonkstore.repositories.EmployeeRepository;
+import com.hieuvo.shonkstore.mappers.UserMapper;
+import com.hieuvo.shonkstore.models.user.User;
+import com.hieuvo.shonkstore.repositories.UserRepository;
 import com.hieuvo.shonkstore.services.EmployeeSalaryService;
-import com.hieuvo.shonkstore.services.EmployeeService;
+import com.hieuvo.shonkstore.services.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Log4j2
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class UserServiceImpl implements UserService {
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private EmployeeMapper employeeMapper;
+    private UserMapper userMapper;
 
     @Autowired
     private EmployeeSalaryService employeeSalaryService;
 
     @Override
-    public EmployeeDto createEmployee(RegisterDto registerDto) {
-        Employee employee = employeeMapper.convertRegisterDtoToModel(registerDto);
+    public UserDto createEmployee(RegisterDto registerDto) {
+        User user = userMapper.convertRegisterDtoToModel(registerDto);
 
-        employeeSalaryService.createEmployeeSalary(employee);
-        employeeRepository.save(employee);
+        employeeSalaryService.createEmployeeSalary(user);
+        userRepository.save(user);
 
-        return employeeMapper.convertModelToDto(employee);
+        return userMapper.convertModelToDto(user);
     }
 
     /**

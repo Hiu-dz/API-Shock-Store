@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class EmployeeDto {
+public class UserDto {
     private UUID id;
     private String surname;
     private String name;
@@ -24,8 +24,6 @@ public class EmployeeDto {
     private String phone;
     private String type;
     private Double salary;
-    @JsonProperty(value = "isWorked")
-    private boolean isWorked;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ShonkSConstant.DATE_TIME_FORMAT)
     private LocalDateTime beginTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ShonkSConstant.DATE_TIME_FORMAT)

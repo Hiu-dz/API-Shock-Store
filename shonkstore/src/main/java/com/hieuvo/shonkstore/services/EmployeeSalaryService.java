@@ -1,10 +1,10 @@
 package com.hieuvo.shonkstore.services;
 
 
-import com.hieuvo.shonkstore.models.employee.Employee;
-import com.hieuvo.shonkstore.models.employee.EmployeeSalary;
+import com.hieuvo.shonkstore.models.user.User;
+import com.hieuvo.shonkstore.models.user.EmployeeSalary;
 
 public interface EmployeeSalaryService {
-    EmployeeSalary createEmployeeSalary(Employee employee);
-    EmployeeSalary createEmployeeSalary(Employee employee, Double salary);
+    EmployeeSalary createEmployeeSalary(User user);
+    EmployeeSalary createEmployeeSalary(User user, Double salary);
 }

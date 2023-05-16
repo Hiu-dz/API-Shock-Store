@@ -1,7 +1,8 @@
 package com.hieuvo.shonkstore.models.product;
 
-import com.hieuvo.shonkstore.models.bill.BillDetail;
+import com.hieuvo.shonkstore.models.bill.CustomerBillDetail;
 import com.hieuvo.shonkstore.models.product.key.ProductCategory;
+import com.hieuvo.shonkstore.models.statistical.StatisticalDetail;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,5 +44,8 @@ public class Product {
     private List<ProductCategory> productsCategories;
 
     @OneToMany(mappedBy = "product")
-    private List<BillDetail> billDetails;
+    private List<CustomerBillDetail> customerBillDetails;
+
+    @OneToMany(mappedBy = "product")
+    private List<StatisticalDetail> statisticalDetails;
 }

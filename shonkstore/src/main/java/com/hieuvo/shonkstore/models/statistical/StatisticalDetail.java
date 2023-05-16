@@ -1,4 +1,4 @@
-package com.hieuvo.shonkstore.models.bill;
+package com.hieuvo.shonkstore.models.statistical;
 
 import com.hieuvo.shonkstore.models.product.Product;
 import jakarta.persistence.*;
@@ -14,8 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bill_details")
-public class BillDetail {
+@Table(name = "statistical_details")
+public class StatisticalDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.VARCHAR)
@@ -26,10 +26,13 @@ public class BillDetail {
     @JoinColumn(name = "product_id", columnDefinition = "varchar(255)", nullable = false)
     private Product product;
 
-    @Column(name = "ordered_quantity", nullable = false)
-    private int orderedQuantity;
+    @Column(nullable = false)
+    private int soldQuantity;
+
+    @Column(columnDefinition = "decimal(9,2)", nullable = false)
+    private double revenue;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "bill_id", columnDefinition = "varchar(255)", nullable = false)
-    private Bill bill;
+    @JoinColumn(name = "statistical_id", columnDefinition = "varchar(255)", nullable = false)
+    private Statistical statistical;
 }

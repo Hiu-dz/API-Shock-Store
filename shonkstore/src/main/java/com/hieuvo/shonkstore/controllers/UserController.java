@@ -1,18 +1,14 @@
 package com.hieuvo.shonkstore.controllers;
 
-import com.hieuvo.shonkstore.common.responses.ResponseObject;
-import com.hieuvo.shonkstore.dto.EmployeeDto;
-import com.hieuvo.shonkstore.services.EmployeeService;
+import com.hieuvo.shonkstore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/employees")
-public class EmployeeController {
+public class UserController {
     @Autowired
-    private EmployeeService employeeService;
+    private UserService userService;
 
 //    @GetMapping(path = {"", "/"}, produces = "application/json")
 //    public ResponseEntity<ResponseObject> getAllEmployees() {

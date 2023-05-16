@@ -1,6 +1,6 @@
 package com.hieuvo.shonkstore.models;
 
-import com.hieuvo.shonkstore.models.employee.Employee;
+import com.hieuvo.shonkstore.models.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,12 +40,12 @@ public class Account implements UserDetails {
     private boolean isDeleted;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_id", columnDefinition = "varchar(255)", nullable = false)
-    private Employee employee;
+    @JoinColumn(name = "user_id", columnDefinition = "varchar(255)", nullable = false)
+    private User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(this.employee.getType().getValue()));
+        return Collections.singletonList(new SimpleGrantedAuthority(this.user.getType().getValue()));
     }
 
     @Override

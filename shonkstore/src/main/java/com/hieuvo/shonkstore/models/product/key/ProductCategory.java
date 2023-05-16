@@ -1,6 +1,6 @@
 package com.hieuvo.shonkstore.models.product.key;
 
-import com.hieuvo.shonkstore.models.employee.Employee;
+import com.hieuvo.shonkstore.models.user.User;
 import com.hieuvo.shonkstore.models.product.Category;
 import com.hieuvo.shonkstore.models.product.Product;
 import jakarta.persistence.*;
@@ -30,8 +30,8 @@ public class ProductCategory {
     private Category category;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "employee_id", columnDefinition = "varchar(255)", nullable = false)
-    private Employee employee;
+    @JoinColumn(name = "user_id", columnDefinition = "varchar(255)", nullable = false)
+    private User user;
 
     @Column(name = "created_time", nullable = false)
     private LocalDateTime createdTime;
